@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-task-management
+  labels:
+    app: cloud-task-management
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cloud-task-management
+  template:
+    metadata:
+      labels:
+        app: cloud-task-management
+    spec:
+      containers:
+      - name: cloud-task-management
+        image: your-docker-image:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          value: "postgres://user:password@hostname:port/dbname"
+        - name: JWT_SECRET
+          value: "your_jwt_secret"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
